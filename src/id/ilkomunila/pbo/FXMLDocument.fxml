@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane id="AnchorPane" prefHeight="399.0" prefWidth="555.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="id.ilkomunila.pbo.FXMLDocumentController">
+    <children>
+        <Button fx:id="btn" layoutX="14.0" layoutY="84.0" onAction="#handleButtonAction" onMouseEntered="#mouseEnteredAction" prefHeight="25.0" prefWidth="69.0" style="-fx-background-color: #00ff00; -fx-font-size: 8pt; -fx-font-weight: bold;" text="Save" />
+        <Label fx:id="label" layoutX="14.0" layoutY="126.0" minHeight="16" minWidth="69" />
+      <TextField fx:id="tfNama" layoutX="14.0" layoutY="45.0" prefHeight="25.0" prefWidth="237.0" promptText="Input Nama" />
+      <Pane layoutX="-3.0" layoutY="375.0" prefHeight="25.0" prefWidth="555.0" style="-fx-border-width: 1px; -fx-background-color: black;" />
+    </children>
+</AnchorPane>
