@@ -19,7 +19,7 @@ public class DBHelper {
     private static String MyCONN="jdbc:mysql://localhost/pbo";  //There are exist pbo in mysql database
     private static String SQCONN="jdbc:sqlite:dbBank.sqlite";
     
-    public Connection getConnection() throws SQLException{
+    public static Connection getConnection() throws SQLException{
         Connection conn=null;
         try {
             Class.forName("org.sqlite.JDBC");

@@ -5,6 +5,8 @@
  */
 package id.ilkomunila.pbo;
 
+import id.ilkomunila.pbo.db.DBHelper;
+import java.sql.SQLException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -31,7 +33,6 @@ public class CobaFXML extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        DBConnection.getConnection();
         launch(args);
     }
     
