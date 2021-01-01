@@ -125,4 +125,8 @@ public class AccountHolderFormController implements Initializable {
        }
     }
     
+    public void loadDataIndividualHolder(){
+        
+    }
+    
 }

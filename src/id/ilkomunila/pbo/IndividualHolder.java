@@ -5,6 +5,7 @@
  */
 package id.ilkomunila.pbo;
 
+import java.util.ArrayList;
 import java.util.Date;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -23,7 +24,11 @@ public class IndividualHolder extends AccountHolder{
         this.SSN = new SimpleStringProperty(SSN);
         this.birthday = new SimpleStringProperty(birthday);
     }
-
+    public IndividualHolder(int holderID, String name, String address, String SSN, String birthday, ArrayList<Account> accounts) {
+        super(holderID, name, address, accounts);
+        this.SSN = new SimpleStringProperty(SSN);
+        this.birthday = new SimpleStringProperty(birthday);
+    }
     public StringProperty getSSN() {
         return SSN;
     }

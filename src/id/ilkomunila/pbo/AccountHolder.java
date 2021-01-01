@@ -34,6 +34,12 @@ public abstract class AccountHolder {
         this.accounts = new ArrayList<>();
         this.accounts.add(account);
     }
+    public AccountHolder(int holderID, String name, String address,ArrayList<Account> accounts) {
+        this.holderID = new SimpleIntegerProperty(holderID);
+        this.name = new SimpleStringProperty(name);
+        this.address = new SimpleStringProperty(address);
+        this.accounts = accounts;
+    }
     public IntegerProperty getHolderID() {
         return holderID;
     }
@@ -68,4 +74,8 @@ public abstract class AccountHolder {
     public void addAccount(Account account) {
         this.accounts.add(account);
     }
+    public IntegerProperty getNumAccounts() {
+        return new SimpleIntegerProperty(this.accounts.size());
+    }
+    
 }

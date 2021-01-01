@@ -5,6 +5,7 @@
  */
 package id.ilkomunila.pbo;
 
+import java.util.ArrayList;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -16,6 +17,10 @@ public class CorporateHolder extends AccountHolder{
     private StringProperty contact;
     public CorporateHolder(int holderID, String name, String address,String contact,Account account) {
         super(holderID, name, address,account);
+        this.contact = new SimpleStringProperty(contact);
+    }
+    public CorporateHolder(int holderID, String name, String address,String contact,ArrayList<Account> accounts) {
+        super(holderID, name, address,accounts);
         this.contact = new SimpleStringProperty(contact);
     }
     public StringProperty getContact() {

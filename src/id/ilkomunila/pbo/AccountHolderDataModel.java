@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.property.IntegerProperty;
@@ -86,7 +87,17 @@ public class AccountHolderDataModel {
         try {
             ResultSet rs = conn.createStatement().executeQuery(sql);
             while (rs.next()){
-                data.add(new IndividualHolder(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),null));
+                ArrayList <Account>accounts=new ArrayList<>();
+                String sqlAccount ="SELECT acc_number, balance "
+                        + "FROM account "
+                        + "WHERE holder_id="+rs.getInt(1);
+                
+                ResultSet rsAccount = conn.createStatement().executeQuery(sqlAccount);
+                while (rsAccount.next()){
+                    accounts.add(new Account(rsAccount.getInt(1),rsAccount.getDouble(2)));
+                }
+                
+                data.add(new IndividualHolder(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),accounts));
             }
         } catch (SQLException ex) {
             Logger.getLogger(AccountHolderDataModel.class.getName()).log(Level.SEVERE, null, ex);
@@ -103,7 +114,16 @@ public class AccountHolderDataModel {
         try {
             ResultSet rs = conn.createStatement().executeQuery(sql);
             while (rs.next()){
-                data.add(new CorporateHolder(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),null));
+                ArrayList <Account>accounts=new ArrayList<>();
+                String sqlAccount ="SELECT acc_number, balance "
+                        + "FROM account "
+                        + "WHERE holder_id="+rs.getInt(1);
+                
+                ResultSet rsAccount = conn.createStatement().executeQuery(sqlAccount);
+                while (rsAccount.next()){
+                    accounts.add(new Account(rsAccount.getInt(1),rsAccount.getDouble(2)));
+                }
+                data.add(new CorporateHolder(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),accounts));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
