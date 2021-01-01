@@ -16,28 +16,44 @@ import javafx.beans.property.StringProperty;
  * @author didik
  */
 public class Account {
-    private IntegerProperty acc_no;
-    private DoubleProperty deposite;
+
+    private IntegerProperty accNumber;
+    private DoubleProperty balance;
 
     public Account(int acc_no, Double deposite) {
-        this.acc_no = new SimpleIntegerProperty(acc_no);
-        this.deposite = new SimpleDoubleProperty(deposite);
+        this.accNumber = new SimpleIntegerProperty(acc_no);
+        this.balance = new SimpleDoubleProperty(deposite);
     }
 
-    public IntegerProperty getAcc_no() {
-        return acc_no;
+    public Integer getAccNumber() {
+        return accNumber.get();
     }
 
-    public void setAcc_no(int acc_no) {
-        this.acc_no = new SimpleIntegerProperty(acc_no);
+    public void setAccNumber(int acc_no) {
+        this.accNumber = new SimpleIntegerProperty(acc_no);
     }
 
-    public DoubleProperty getDeposite() {
-        return deposite;
+    public Double getBalance() {
+        return balance.get();
     }
 
-    public void setDeposite(double deposite) {
-        this.deposite = new SimpleDoubleProperty(deposite);
+    public void setBalance(double amt) {
+        this.balance = new SimpleDoubleProperty(amt);
+    }
+
+    public IntegerProperty accNumberProperty() {
+        return accNumber;
+    }
+
+    public DoubleProperty balanceProperty() {
+        return balance;
     }
     
+    public void deposite(Double amt){
+        this.balance.set(this.getBalance()+amt);
+    }
+    
+    public void withdraw(Double amt){
+        this.balance.set(this.getBalance()- amt);
+    }
 }

@@ -9,11 +9,14 @@ import id.ilkomunila.pbo.db.DBHelper;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,6 +26,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
@@ -31,12 +35,12 @@ import javafx.scene.paint.Color;
  * @author didik
  */
 public class AccountHolderFormController implements Initializable {
-    
-   @FXML
-    private TableView<IndividualHolder> tblAccountHolder;
-    
+
     @FXML
-    private TableColumn<IndividualHolder, IntegerProperty> idColumn;
+    private TableView<IndividualHolder> tblAccountHolder;
+
+    @FXML
+    private TableColumn<IndividualHolder, Integer> idColumn;
 
     @FXML
     private TableColumn<IndividualHolder, String> nameColumn;
@@ -51,19 +55,19 @@ public class AccountHolderFormController implements Initializable {
     private TableColumn<IndividualHolder, String> bdColumn;
 
     @FXML
-    private TableColumn<IndividualHolder, IntegerProperty> numAccColumn;
+    private TableColumn<IndividualHolder, Integer> numAccColumn;
 
     @FXML
     private TableView<Account> tblAccount;
 
     @FXML
-    private TableColumn<Account, IntegerProperty> noColumn;
+    private TableColumn<Account, Integer> noColumn;
 
     @FXML
-    private TableColumn<Account, IntegerProperty> accNumColumn;
+    private TableColumn<Account, Integer> accNumColumn;
 
     @FXML
-    private TableColumn<Account, DoubleProperty> balanceColumn;
+    private TableColumn<Account, Double> balanceColumn;
 
     @FXML
     private TextField tfHolderID;
@@ -76,10 +80,10 @@ public class AccountHolderFormController implements Initializable {
 
     @FXML
     private TextField tfSSN;
-    
+
     @FXML
     private DatePicker dpBirthDate;
-    
+
     @FXML
     private TextField tfAccNumber;
 
@@ -88,45 +92,73 @@ public class AccountHolderFormController implements Initializable {
 
     @FXML
     private Label lblDBStatus;
-    
+
     @FXML
     private Label lbActionStatus;
-      
+
     AccountHolderDataModel accHolder;
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         System.out.println("Sukses");
         try {
-              accHolder =new AccountHolderDataModel();
-              lblDBStatus.setText(accHolder.conn!=null?"Connected":"Not Connected");
-         
-        } catch (SQLException ex){
+            accHolder = new AccountHolderDataModel();
+            lblDBStatus.setText(accHolder.conn != null ? "Connected" : "Not Connected");
+
+        } catch (SQLException ex) {
             System.out.println("Gagal");
         }
-    }    
-    public void handleButtonAddAccount(ActionEvent event){
-        LocalDate ld = dpBirthDate.getValue();
-        String birthdate=String.format("%d-%02d-%02d", ld.getYear(),ld.getMonthValue(),ld.getDayOfMonth());
-    //            System.out.println(birthdate);
-        IndividualHolder ih = new IndividualHolder(Integer.parseInt(tfHolderID.getText()),tfName.getText(),tfAddress.getText(),
-                tfSSN.getText(),birthdate,new Account(Integer.parseInt(tfAccNumber.getText()),Double.parseDouble(tfBalance.getText())));
-
-       try {
-           accHolder.addAccountHolder(ih);
-           lbActionStatus.setText("Account data added successfuly");
-           lbActionStatus.setTextFill(Color.web("#0d39ba"));
-           
-       } catch (SQLException ex) {
-           Logger.getLogger(AccountHolderFormController.class.getName()).log(Level.SEVERE, null, ex);
-           lbActionStatus.setText("Failed saving data account");
-           lbActionStatus.setTextFill(Color.web("#0d39ba"));
-       }
+        tblAccountHolder.getSelectionModel().selectedIndexProperty().addListener(listener -> {
+            if (tblAccountHolder.getSelectionModel().getSelectedItem() != null) {
+                IndividualHolder ih = tblAccountHolder.getSelectionModel().getSelectedItem();
+                System.out.println(ih.getAccounts().size());
+                loadDataAccount(ih);        //Polymorphisme
+            }
+        });
     }
-    
-    public void loadDataIndividualHolder(){
+
+    public void handleButtonAddAccount(ActionEvent event) {
+        LocalDate ld = dpBirthDate.getValue();
+        String birthdate = String.format("%d-%02d-%02d", ld.getYear(), ld.getMonthValue(), ld.getDayOfMonth());
+        //            System.out.println(birthdate);
+        IndividualHolder ih = new IndividualHolder(Integer.parseInt(tfHolderID.getText()), tfName.getText(), tfAddress.getText(),
+                tfSSN.getText(), birthdate, new Account(Integer.parseInt(tfAccNumber.getText()), Double.parseDouble(tfBalance.getText())));
+
+        try {
+            accHolder.addAccountHolder(ih);
+            lbActionStatus.setText("Account data added successfuly");
+            lbActionStatus.setTextFill(Color.web("#0d39ba"));
+
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountHolderFormController.class.getName()).log(Level.SEVERE, null, ex);
+            lbActionStatus.setText("Failed saving data account");
+            lbActionStatus.setTextFill(Color.web("#0d39ba"));
+        }
+    }
+
+    public void loadDataIndividualHolder(ActionEvent event) {
+        ObservableList<IndividualHolder> data = accHolder.getIndividualHolders();
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("holderID"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
+        ssnColumn.setCellValueFactory(new PropertyValueFactory<>("SSN"));
+        bdColumn.setCellValueFactory(new PropertyValueFactory<>("birthdate"));
+        numAccColumn.setCellValueFactory(new PropertyValueFactory<>("numAccounts"));
+        tblAccountHolder.setItems(null);
+        tblAccountHolder.setItems(data);
+    }
+
+    public void loadDataAccount(AccountHolder accounts) {
+        ObservableList<Account> data = FXCollections.observableArrayList();
+        for (Account account : accounts.getAccounts()) {
+            data.add(account);
+        }
+        accNumColumn.setCellValueFactory(new PropertyValueFactory<>("accNumber"));
+        balanceColumn.setCellValueFactory(new PropertyValueFactory<>("balance"));
+        tblAccount.setItems(null);
+        tblAccount.setItems(data);
         
     }
-    
+
 }

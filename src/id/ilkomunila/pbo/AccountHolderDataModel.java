@@ -37,21 +37,21 @@ public class AccountHolderDataModel {
         String insertAccount="INSERT INTO account (holder_id, acc_number, balance) VALUES (?,?,?)";
 
         PreparedStatement stmtHolder = conn.prepareStatement(insertHolder);
-        stmtHolder.setInt(1, holder.getHolderID().get());
-        stmtHolder.setString(2,holder.getName().get());
-        stmtHolder.setString(3, holder.getAddress().get());
+        stmtHolder.setInt(1, holder.getHolderID());
+        stmtHolder.setString(2,holder.getName());
+        stmtHolder.setString(3, holder.getAddress());
         stmtHolder.execute();
 
         PreparedStatement stmtIndividual = conn.prepareStatement(insertIndivual);
-        stmtIndividual.setInt(1, holder.getHolderID().get());
-        stmtIndividual.setString(2, holder.getSSN().get());
-        stmtIndividual.setString(3, holder.getBirthday().get());
+        stmtIndividual.setInt(1, holder.getHolderID());
+        stmtIndividual.setString(2, holder.getSSN());
+        stmtIndividual.setString(3, holder.getBirthdate());
         stmtIndividual.execute();
 
         PreparedStatement stmtAccount = conn.prepareStatement(insertAccount);
-        stmtAccount.setInt(1, holder.getHolderID().get());
-        stmtAccount.setInt(2, holder.getAccounts().get(0).getAcc_no().get());
-        stmtAccount.setDouble(3, holder.getAccounts().get(0).getDeposite().get());
+        stmtAccount.setInt(1, holder.getHolderID());
+        stmtAccount.setInt(2, holder.getAccounts().get(0).getAccNumber());
+        stmtAccount.setDouble(3, holder.getAccounts().get(0).getBalance());
         stmtAccount.execute();
 
         
@@ -62,20 +62,20 @@ public class AccountHolderDataModel {
         String insertAccount="INSERT INTO account (holder_id, acc_number, balance) VALUES (?,?,?)";
 
         PreparedStatement stmtHolder = conn.prepareStatement(insertHolder);
-        stmtHolder.setInt(1, holder.getHolderID().get());
-        stmtHolder.setString(2,holder.getName().get());
-        stmtHolder.setString(3, holder.getAddress().get());
+        stmtHolder.setInt(1, holder.getHolderID());
+        stmtHolder.setString(2,holder.getName());
+        stmtHolder.setString(3, holder.getAddress());
         stmtHolder.execute();
 
         PreparedStatement stmtCorporate = conn.prepareStatement(insertCorporate);
-        stmtCorporate.setInt(1, holder.getHolderID().get());
-        stmtCorporate.setString(2, holder.getContact().get());
+        stmtCorporate.setInt(1, holder.getHolderID());
+        stmtCorporate.setString(2, holder.getContact());
         stmtCorporate.execute();
 
         PreparedStatement stmtAccount = conn.prepareStatement(insertAccount);
-        stmtAccount.setInt(1, holder.getHolderID().get());
-        stmtAccount.setInt(2, holder.getAccounts().get(0).getAcc_no().get());
-        stmtAccount.setDouble(3, holder.getAccounts().get(0).getDeposite().get());
+        stmtAccount.setInt(1, holder.getHolderID());
+        stmtAccount.setInt(2, holder.getAccounts().get(0).getAccNumber());
+        stmtAccount.setDouble(3, holder.getAccounts().get(0).getBalance());
         stmtAccount.execute();
     
     }
@@ -131,19 +131,5 @@ public class AccountHolderDataModel {
         
         return data;
     }
-     public IntegerProperty getNumAccounts(int holderID){
-        int numAccounts=0;
-        String sql="SELECT holder_id, count(holder_id) "
-                + "FROM account GROUP BY holder_id WHERE holder_id="+holderID;
-        try {
-            ResultSet rs = conn.createStatement().executeQuery(sql);
-            while (rs.next()){
-                numAccounts = rs.getInt(2);
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        
-         return new SimpleIntegerProperty(numAccounts);
-     } 
+     
 }

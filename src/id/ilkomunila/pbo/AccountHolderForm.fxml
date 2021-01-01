@@ -16,7 +16,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="id.ilkomunila.pbo.AccountHolderFormController">
    <children>
       <AnchorPane id="AnchorPane" layoutX="-6.0" layoutY="28.0" prefHeight="680.0" prefWidth="1286.0">
@@ -72,7 +71,7 @@
                               </Label>
                               <Button layoutX="30.0" layoutY="349.0" mnemonicParsing="false" onAction="#handleButtonAddAccount" prefHeight="25.0" prefWidth="250.0" text="Add Account" AnchorPane.leftAnchor="30.0" />
                               <Button layoutX="30.0" layoutY="382.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="250.0" text="Clear Form" />
-                              <Button layoutX="30.0" layoutY="416.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="250.0" text="Reload Data" />
+                              <Button layoutX="30.0" layoutY="416.0" mnemonicParsing="false" onAction="#loadDataIndividualHolder" prefHeight="25.0" prefWidth="250.0" text="Reload Data" />
                               <Label fx:id="lbActionStatus" layoutX="30.0" layoutY="316.0" prefHeight="17.0" prefWidth="251.0" textAlignment="CENTER" textFill="#b70c69">
                                  <font>
                                     <Font name="System Bold Italic" size="12.0" />

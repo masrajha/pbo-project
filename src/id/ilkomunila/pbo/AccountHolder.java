@@ -16,48 +16,55 @@ import javafx.beans.property.StringProperty;
  * @author didik
  */
 public abstract class AccountHolder {
+
     protected IntegerProperty holderID;
     protected StringProperty name;
     protected StringProperty address;
+    protected IntegerProperty numAccounts;
     protected ArrayList<Account> accounts;
-    
+
     public AccountHolder(int holderID, String name, String address) {
         this.holderID = new SimpleIntegerProperty(holderID);
         this.name = new SimpleStringProperty(name);
         this.address = new SimpleStringProperty(address);
         this.accounts = new ArrayList<>();
     }
-    public AccountHolder(int holderID, String name, String address,Account account) {
+
+    public AccountHolder(int holderID, String name, String address, Account account) {
         this.holderID = new SimpleIntegerProperty(holderID);
         this.name = new SimpleStringProperty(name);
         this.address = new SimpleStringProperty(address);
         this.accounts = new ArrayList<>();
         this.accounts.add(account);
+        this.numAccounts=new SimpleIntegerProperty(this.accounts.size());
     }
-    public AccountHolder(int holderID, String name, String address,ArrayList<Account> accounts) {
+
+    public AccountHolder(int holderID, String name, String address, ArrayList<Account> accounts) {
         this.holderID = new SimpleIntegerProperty(holderID);
         this.name = new SimpleStringProperty(name);
         this.address = new SimpleStringProperty(address);
         this.accounts = accounts;
+        this.numAccounts=new SimpleIntegerProperty(this.accounts.size());
     }
-    public IntegerProperty getHolderID() {
-        return holderID;
+
+    public Integer getHolderID() {
+        return holderID.get();
     }
 
     public void setHolderID(int holderID) {
         this.holderID = new SimpleIntegerProperty(holderID);
     }
 
-    public StringProperty getName() {
-        return name;
+    public String getName() {
+        return name.get();
     }
 
     public void setName(String name) {
         this.name = new SimpleStringProperty(name);
     }
 
-    public StringProperty getAddress() {
-        return address;
+    public String getAddress() {
+        return address.get();
     }
 
     public void setAddress(String address) {
@@ -71,9 +78,25 @@ public abstract class AccountHolder {
     public void setAccounts(ArrayList<Account> accounts) {
         this.accounts = accounts;
     }
+
+    public IntegerProperty holderIDProperty() {
+        return holderID;
+    }
+
+    public StringProperty nameProperty() {
+        return name;
+    }
+
+    public StringProperty addressProperty() {
+        return address;
+    }
+    public IntegerProperty numAccountsProperty() {
+        return numAccounts;
+    }
     public void addAccount(Account account) {
         this.accounts.add(account);
     }
+
     public IntegerProperty getNumAccounts() {
         return new SimpleIntegerProperty(this.accounts.size());
     }
