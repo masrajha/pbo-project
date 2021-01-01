@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="id.ilkomunila.pbo.AccountHolderFormController">
+   <children>
+      <AnchorPane id="AnchorPane" layoutX="-6.0" layoutY="28.0" prefHeight="680.0" prefWidth="1286.0">
+         <children>
+            <TabPane layoutX="6.0" layoutY="-1.0" prefHeight="720.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE">
+               <tabs>
+                  <Tab text="Individual Account">
+                     <content>
+                        <AnchorPane prefHeight="691.0" prefWidth="1270.0" style="-fx-background-color: cb997e;">
+                           <children>
+                              <HBox layoutX="313.0" prefHeight="375.0" prefWidth="967.0" style="-fx-background-color: eddcd2;">
+                                 <children>
+                                    <TableView fx:id="tblAccountHolder" prefHeight="368.0" prefWidth="958.0">
+                                       <columns>
+                                          <TableColumn fx:id="idColumn" prefWidth="75.0" text="Holder ID" />
+                                          <TableColumn fx:id="nameColumn" prefWidth="160.0" text="Name" />
+                                          <TableColumn fx:id="addressColumn" minWidth="0.0" prefWidth="254.0" text="Address" />
+                                          <TableColumn fx:id="ssnColumn" prefWidth="263.0" text="SSN" />
+                                          <TableColumn fx:id="bdColumn" minWidth="0.0" prefWidth="100.0" text="Birthdate" />
+                                          <TableColumn fx:id="numAccColumn" prefWidth="98.0" text="Account" />
+                                       </columns>
+                                       <HBox.margin>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                       </HBox.margin>
+                                    </TableView>
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="313.0" layoutY="376.0" prefHeight="277.0" prefWidth="967.0" style="-fx-background-color: a5a58d;">
+                                 <children>
+                                    <TableView fx:id="tblAccount" prefHeight="200.0" prefWidth="461.0">
+                                       <columns>
+                                          <TableColumn fx:id="noColumn" prefWidth="52.0" text="No" />
+                                          <TableColumn fx:id="accNumColumn" prefWidth="226.0" text="Account Number" />
+                                          <TableColumn fx:id="balanceColumn" minWidth="0.0" prefWidth="169.0" text="Balance" />
+                                       </columns>
+                                       <HBox.margin>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                       </HBox.margin>
+                                    </TableView>
+                                 </children>
+                              </HBox>
+                              <TextField fx:id="tfHolderID" layoutX="-1.0" layoutY="76.0" prefHeight="25.0" prefWidth="250.0" promptText="Holder ID" AnchorPane.leftAnchor="30.0" />
+                              <TextField fx:id="tfName" layoutY="106.0" prefHeight="25.0" prefWidth="250.0" promptText="Holder Name" AnchorPane.leftAnchor="30.0" />
+                              <TextField fx:id="tfAddress" layoutY="135.0" prefHeight="25.0" prefWidth="250.0" promptText="Holder Address" AnchorPane.leftAnchor="30.0" />
+                              <TextField fx:id="tfSSN" layoutY="164.0" prefHeight="25.0" prefWidth="250.0" promptText="Holder SSN" AnchorPane.leftAnchor="30.0" />
+                              <TextField fx:id="tfAccNumber" layoutY="242.0" prefHeight="25.0" prefWidth="250.0" promptText="Account Number" AnchorPane.leftAnchor="30.0" />
+                              <TextField fx:id="tfBalance" layoutY="274.0" prefHeight="25.0" prefWidth="250.0" promptText="Account Balance" AnchorPane.leftAnchor="30.0" />
+                              <DatePicker fx:id="dpBirthDate" layoutY="194.0" prefHeight="25.0" prefWidth="250.0" promptText="Holder Birthdate" AnchorPane.leftAnchor="30.0" />
+                              <Label layoutX="6.0" layoutY="23.0" text="Acount Holder System" textAlignment="CENTER">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font>
+                              </Label>
+                              <Button layoutX="30.0" layoutY="349.0" mnemonicParsing="false" onAction="#handleButtonAddAccount" prefHeight="25.0" prefWidth="250.0" text="Add Account" AnchorPane.leftAnchor="30.0" />
+                              <Button layoutX="30.0" layoutY="382.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="250.0" text="Clear Form" />
+                              <Button layoutX="30.0" layoutY="416.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="250.0" text="Reload Data" />
+                              <Label fx:id="lbActionStatus" layoutX="30.0" layoutY="316.0" prefHeight="17.0" prefWidth="251.0" textAlignment="CENTER" textFill="#b70c69">
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab text="Corporate Account" />
+               </tabs>
+            </TabPane>
+         </children>
+      </AnchorPane>
+      <MenuBar>
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <Label layoutX="1101.0" layoutY="6.0" text="DB Status: " />
+      <Label fx:id="lblDBStatus" layoutX="1158.0" layoutY="6.0" />
+   </children>
+</AnchorPane>

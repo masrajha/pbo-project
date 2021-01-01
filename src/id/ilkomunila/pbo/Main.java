@@ -17,11 +17,11 @@ import javafx.stage.Stage;
  *
  * @author didik
  */
-public class CobaFXML extends Application {
+public class Main extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("AccountHolderForm.fxml"));
         
         Scene scene = new Scene(root);
         
