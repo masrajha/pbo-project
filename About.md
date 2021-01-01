@@ -27,14 +27,16 @@ classDiagram
       -String contact
     }
     class Account{
-      -double balanace=0;
+      -double balanace
       +deposite(double amt)
       +withdraw(double amt)
-      +double getBalance();
+      +double getBalance()
     }
             
 ```
+
 ### ER Diagram
+
 ```mermaid
 erDiagram
           ACCOUNTHOLDER ||..|| INDIVIDUAL-HOLDER : is
