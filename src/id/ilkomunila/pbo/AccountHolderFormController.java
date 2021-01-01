@@ -105,7 +105,10 @@ public class AccountHolderFormController implements Initializable {
         try {
             accHolder = new AccountHolderDataModel();
             lblDBStatus.setText(accHolder.conn != null ? "Connected" : "Not Connected");
-
+            tfHolderID.setText(""+accHolder.nextAccountHolderID());
+            tfHolderID.setDisable(true);
+            tfAccNumber.setText(tfHolderID.getText()+1);
+            tfAccNumber.setDisable(true);
         } catch (SQLException ex) {
             System.out.println("Gagal");
         }
@@ -154,6 +157,7 @@ public class AccountHolderFormController implements Initializable {
         for (Account account : accounts.getAccounts()) {
             data.add(account);
         }
+        
         accNumColumn.setCellValueFactory(new PropertyValueFactory<>("accNumber"));
         balanceColumn.setCellValueFactory(new PropertyValueFactory<>("balance"));
         tblAccount.setItems(null);

@@ -23,22 +23,25 @@ import javafx.collections.ObservableList;
  * @author didik
  */
 public class AccountHolderDataModel {
-    Connection conn=null;
+
+    Connection conn = null;
 
     public AccountHolderDataModel() throws SQLException {
         conn = DBHelper.getConnection();
     }
+
     public AccountHolderDataModel(String driver) throws SQLException {
         conn = DBHelper.getConnection(driver);
     }
-    public void addAccountHolder(IndividualHolder holder) throws SQLException{
+
+    public void addAccountHolder(IndividualHolder holder) throws SQLException {
         String insertHolder = "INSERT INTO account_holder (holder_id, name, address) VALUES (?,?,?)";
-        String insertIndivual="INSERT INTO individual_holder (holder_id, SSN, birthdate) VALUES (?,?,?)";
-        String insertAccount="INSERT INTO account (holder_id, acc_number, balance) VALUES (?,?,?)";
+        String insertIndivual = "INSERT INTO individual_holder (holder_id, SSN, birthdate) VALUES (?,?,?)";
+        String insertAccount = "INSERT INTO account (holder_id, acc_number, balance) VALUES (?,?,?)";
 
         PreparedStatement stmtHolder = conn.prepareStatement(insertHolder);
         stmtHolder.setInt(1, holder.getHolderID());
-        stmtHolder.setString(2,holder.getName());
+        stmtHolder.setString(2, holder.getName());
         stmtHolder.setString(3, holder.getAddress());
         stmtHolder.execute();
 
@@ -54,16 +57,16 @@ public class AccountHolderDataModel {
         stmtAccount.setDouble(3, holder.getAccounts().get(0).getBalance());
         stmtAccount.execute();
 
-        
     }
+
     public void addAccountHolder(CorporateHolder holder) throws SQLException {
         String insertHolder = "INSERT INTO account_holder (holder_id, name, address) VALUES (?,?,?)";
-        String insertCorporate="INSERT INTO corporate_holder (holder_id, contact) VALUES (?,?)";
-        String insertAccount="INSERT INTO account (holder_id, acc_number, balance) VALUES (?,?,?)";
+        String insertCorporate = "INSERT INTO corporate_holder (holder_id, contact) VALUES (?,?)";
+        String insertAccount = "INSERT INTO account (holder_id, acc_number, balance) VALUES (?,?,?)";
 
         PreparedStatement stmtHolder = conn.prepareStatement(insertHolder);
         stmtHolder.setInt(1, holder.getHolderID());
-        stmtHolder.setString(2,holder.getName());
+        stmtHolder.setString(2, holder.getName());
         stmtHolder.setString(3, holder.getAddress());
         stmtHolder.execute();
 
@@ -77,59 +80,68 @@ public class AccountHolderDataModel {
         stmtAccount.setInt(2, holder.getAccounts().get(0).getAccNumber());
         stmtAccount.setDouble(3, holder.getAccounts().get(0).getBalance());
         stmtAccount.execute();
-    
+
     }
-    public ObservableList<IndividualHolder> getIndividualHolders(){
-        ObservableList<IndividualHolder> data=FXCollections.observableArrayList();
-        String sql="SELECT holder_id, name, address, SSN, birthdate "
+
+    public ObservableList<IndividualHolder> getIndividualHolders() {
+        ObservableList<IndividualHolder> data = FXCollections.observableArrayList();
+        String sql = "SELECT holder_id, name, address, SSN, birthdate "
                 + "FROM account_holder NATURAL JOIN individual_holder "
                 + "ORDER BY name";
         try {
             ResultSet rs = conn.createStatement().executeQuery(sql);
-            while (rs.next()){
-                ArrayList <Account>accounts=new ArrayList<>();
-                String sqlAccount ="SELECT acc_number, balance "
+            while (rs.next()) {
+                ArrayList<Account> accounts = new ArrayList<>();
+                String sqlAccount = "SELECT acc_number, balance "
                         + "FROM account "
-                        + "WHERE holder_id="+rs.getInt(1);
-                
+                        + "WHERE holder_id=" + rs.getInt(1);
+
                 ResultSet rsAccount = conn.createStatement().executeQuery(sqlAccount);
-                while (rsAccount.next()){
-                    accounts.add(new Account(rsAccount.getInt(1),rsAccount.getDouble(2)));
+                while (rsAccount.next()) {
+                    accounts.add(new Account(rsAccount.getInt(1), rsAccount.getDouble(2)));
                 }
-                
-                data.add(new IndividualHolder(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),accounts));
+
+                data.add(new IndividualHolder(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), accounts));
             }
         } catch (SQLException ex) {
             Logger.getLogger(AccountHolderDataModel.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return data;
     }
-    
-     public ObservableList<CorporateHolder> getCorporateHolders(){
-        ObservableList<CorporateHolder> data=FXCollections.observableArrayList();
-        String sql="SELECT holder_id, name, address, contact "
+
+    public ObservableList<CorporateHolder> getCorporateHolders() {
+        ObservableList<CorporateHolder> data = FXCollections.observableArrayList();
+        String sql = "SELECT holder_id, name, address, contact "
                 + "FROM account_holder NATURAL JOIN corporate_holder "
                 + "ORDER BY name";
         try {
             ResultSet rs = conn.createStatement().executeQuery(sql);
-            while (rs.next()){
-                ArrayList <Account>accounts=new ArrayList<>();
-                String sqlAccount ="SELECT acc_number, balance "
+            while (rs.next()) {
+                ArrayList<Account> accounts = new ArrayList<>();
+                String sqlAccount = "SELECT acc_number, balance "
                         + "FROM account "
-                        + "WHERE holder_id="+rs.getInt(1);
-                
+                        + "WHERE holder_id=" + rs.getInt(1);
+
                 ResultSet rsAccount = conn.createStatement().executeQuery(sqlAccount);
-                while (rsAccount.next()){
-                    accounts.add(new Account(rsAccount.getInt(1),rsAccount.getDouble(2)));
+                while (rsAccount.next()) {
+                    accounts.add(new Account(rsAccount.getInt(1), rsAccount.getDouble(2)));
                 }
-                data.add(new CorporateHolder(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),accounts));
+                data.add(new CorporateHolder(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), accounts));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        
+
         return data;
     }
-     
+
+    public int nextAccountHolderID() throws SQLException {
+        String sql = "SELECT MAX(holder_id) FROM account_holder";
+        ResultSet rs = conn.createStatement().executeQuery(sql);
+        while (rs.next()) {
+            return (rs.getInt(1)+1);
+        }
+        return 1;
+    }
 }
