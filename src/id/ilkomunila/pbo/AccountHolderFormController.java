@@ -103,14 +103,16 @@ public class AccountHolderFormController implements Initializable {
         // TODO
         System.out.println("Sukses");
         try {
-            accHolder = new AccountHolderDataModel();
+            accHolder = new AccountHolderDataModel("MYSQL");
             lblDBStatus.setText(accHolder.conn != null ? "Connected" : "Not Connected");
-            tfHolderID.setText(""+accHolder.nextAccountHolderID());
+            tfHolderID.setText("" + accHolder.nextAccountHolderID());
             tfHolderID.setDisable(true);
-            tfAccNumber.setText(tfHolderID.getText()+1);
+            tfAccNumber.setText(tfHolderID.getText() + "01");
             tfAccNumber.setDisable(true);
+            dpBirthDate.setValue(LocalDate.of(LocalDate.now().getYear()-17, LocalDate.now().getMonthValue(), LocalDate.now().getDayOfMonth()));
         } catch (SQLException ex) {
             System.out.println("Gagal");
+            ex.printStackTrace();
         }
         tblAccountHolder.getSelectionModel().selectedIndexProperty().addListener(listener -> {
             if (tblAccountHolder.getSelectionModel().getSelectedItem() != null) {
@@ -157,12 +159,28 @@ public class AccountHolderFormController implements Initializable {
         for (Account account : accounts.getAccounts()) {
             data.add(account);
         }
-        
+
         accNumColumn.setCellValueFactory(new PropertyValueFactory<>("accNumber"));
         balanceColumn.setCellValueFactory(new PropertyValueFactory<>("balance"));
         tblAccount.setItems(null);
         tblAccount.setItems(data);
-        
+
+    }
+
+    public void handleClearForm(ActionEvent event) {
+        try {
+            tfHolderID.setText("" + accHolder.nextAccountHolderID());
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountHolderFormController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        tfHolderID.setDisable(true);
+        tfName.setText("");
+        tfAddress.setText("");
+        tfSSN.setText("");
+        dpBirthDate.setValue(LocalDate.of(LocalDate.now().getYear()-17, LocalDate.now().getMonthValue(), LocalDate.now().getDayOfMonth()));
+        tfAccNumber.setText(tfHolderID.getText() + "01");
+        tfAccNumber.setDisable(true);
+        tfBalance.setText("");
     }
 
 }

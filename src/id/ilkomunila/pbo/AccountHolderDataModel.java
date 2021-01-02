@@ -140,8 +140,9 @@ public class AccountHolderDataModel {
         String sql = "SELECT MAX(holder_id) FROM account_holder";
         ResultSet rs = conn.createStatement().executeQuery(sql);
         while (rs.next()) {
-            return (rs.getInt(1)+1);
+//            System.out.println("Haloooo "+rs.getInt(1));
+            return (rs.getInt(1)==0?1000001:rs.getInt(1)+1);
         }
-        return 1;
+        return 1000001;
     }
 }
