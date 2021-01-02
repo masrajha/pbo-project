@@ -79,7 +79,7 @@ public class AccountHolderFormController implements Initializable {
     @FXML
     private TextField tfAddress;
 
-   @FXML
+    @FXML
     private ComboBox cbGender;
 
     @FXML
@@ -96,15 +96,18 @@ public class AccountHolderFormController implements Initializable {
 
     @FXML
     private Label lbActionStatus;
+    
+    @FXML
+    private Button btnReload;
 
     AccountHolderDataModel accHolder;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        ObservableList<String> gender=FXCollections.observableArrayList("Male","Female");
+        ObservableList<String> gender = FXCollections.observableArrayList("Male", "Female");
         cbGender.setItems(gender);
-        
+
         try {
             accHolder = new AccountHolderDataModel();
             lblDBStatus.setText(accHolder.conn != null ? "Connected" : "Not Connected");
@@ -112,7 +115,8 @@ public class AccountHolderFormController implements Initializable {
             tfHolderID.setDisable(true);
             tfAccNumber.setText(tfHolderID.getText() + "01");
             tfAccNumber.setDisable(true);
-            dpBirthDate.setValue(LocalDate.of(LocalDate.now().getYear()-17, LocalDate.now().getMonthValue(), LocalDate.now().getDayOfMonth()));
+            dpBirthDate.setValue(LocalDate.of(LocalDate.now().getYear() - 17, LocalDate.now().getMonthValue(), LocalDate.now().getDayOfMonth()));
+            btnReload.fire();
 //            System.out.println("Sukses");
         } catch (SQLException ex) {
             System.out.println("Gagal");
@@ -138,6 +142,7 @@ public class AccountHolderFormController implements Initializable {
             accHolder.addAccountHolder(ih);
             lbActionStatus.setText("Account data added successfuly");
             lbActionStatus.setTextFill(Color.web("#0d39ba"));
+            btnReload.fire();
 
         } catch (SQLException ex) {
             Logger.getLogger(AccountHolderFormController.class.getName()).log(Level.SEVERE, null, ex);
@@ -181,7 +186,7 @@ public class AccountHolderFormController implements Initializable {
         tfName.setText("");
         tfAddress.setText("");
         cbGender.getSelectionModel().clearSelection();
-        dpBirthDate.setValue(LocalDate.of(LocalDate.now().getYear()-17, LocalDate.now().getMonthValue(), LocalDate.now().getDayOfMonth()));
+        dpBirthDate.setValue(LocalDate.of(LocalDate.now().getYear() - 17, LocalDate.now().getMonthValue(), LocalDate.now().getDayOfMonth()));
         tfAccNumber.setText(tfHolderID.getText() + "01");
         tfAccNumber.setDisable(true);
         tfBalance.setText("");

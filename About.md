@@ -27,7 +27,7 @@ classDiagram
       -String contact
     }
     class Account{
-      -double balanace
+      -double balance
       +deposite(double amt)
       +withdraw(double amt)
       +double getBalance()
@@ -58,4 +58,62 @@ erDiagram
             int acc_number
             double balance
           }
+```
+### Design Class Diagram for JavaFX and Database
+```mermaid
+classDiagram
+    AccountHolder <|-- IndividualHolder
+    AccountHolder <|-- CorporateHolder
+    AccountHolder "1"--o"*" Account : has
+    AccountHolder --o AccountHolderDataModel : Data Modeling
+    AccountHolderDataModel .. AccountHolderController : Form Control
+    AccountHolderDataModel -- DBHelper : DB Connection
+    AccountHolderController -- AccountHolderForm
+
+    class AccountHolder{
+      <<abstract>>
+      #IntegerProperty ID
+      #StringProperty name
+      #StringProperty address
+      #IntegerProperty numAccounts
+      
+      +IntegerProperty nextID()
+    }
+    
+    class IndividualHolder{
+      -StringProperty gender
+      -StringProperty birthdate
+    }
+    class CorporateHolder{
+      -StringProperty contact
+    }
+    class Account{
+      -DoubleProperty balance
+      +deposite(double amt)
+      +withdraw(double amt)
+      +double getBalance()
+    }
+
+    class AccountHolderDataModel{
+        Connection conn
+        addAccountHolder()
+        getIndividualHolders()
+        getCorporateHolders()
+        nextAccountHolderID()
+    }
+
+    class AccountHolderController{
+        initialize()
+        handleButtonAddAccount()
+        loadDataIndividualHolder()
+        loadDataCorporateHolder()
+        loadDataAccount()
+        handleClearForm()
+    }
+    class DBHelper{
+        getConnection()
+        getConnection(String driver)
+        createTable();
+    }
+            
 ```
