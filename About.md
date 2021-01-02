@@ -20,7 +20,7 @@ classDiagram
     }
     
     class IndividualHolder{
-      -String SSN
+      -String gender
       -String birthdate
     }
     class CorporateHolder{
@@ -48,7 +48,7 @@ erDiagram
             string adress
           }
           INDIVIDUAL-HOLDER{
-            string SSN
+            string gender
             string birthdate
           }
           CORPORATE-HOLDER{

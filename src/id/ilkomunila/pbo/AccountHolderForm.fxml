@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
@@ -33,7 +34,7 @@
                                           <TableColumn fx:id="idColumn" prefWidth="75.0" text="Holder ID" />
                                           <TableColumn fx:id="nameColumn" prefWidth="160.0" text="Name" />
                                           <TableColumn fx:id="addressColumn" minWidth="0.0" prefWidth="254.0" text="Address" />
-                                          <TableColumn fx:id="ssnColumn" prefWidth="263.0" text="SSN" />
+                                          <TableColumn fx:id="genderColumn" prefWidth="263.0" text="Gender" />
                                           <TableColumn fx:id="bdColumn" minWidth="0.0" prefWidth="100.0" text="Birthdate" />
                                           <TableColumn fx:id="numAccColumn" prefWidth="98.0" text="Account" />
                                        </columns>
@@ -60,7 +61,6 @@
                               <TextField fx:id="tfHolderID" layoutX="-1.0" layoutY="76.0" prefHeight="25.0" prefWidth="250.0" promptText="Holder ID" AnchorPane.leftAnchor="30.0" />
                               <TextField fx:id="tfName" layoutY="106.0" prefHeight="25.0" prefWidth="250.0" promptText="Holder Name" AnchorPane.leftAnchor="30.0" />
                               <TextField fx:id="tfAddress" layoutY="135.0" prefHeight="25.0" prefWidth="250.0" promptText="Holder Address" AnchorPane.leftAnchor="30.0" />
-                              <TextField fx:id="tfSSN" layoutY="164.0" prefHeight="25.0" prefWidth="250.0" promptText="Holder SSN" AnchorPane.leftAnchor="30.0" />
                               <TextField fx:id="tfAccNumber" layoutY="242.0" prefHeight="25.0" prefWidth="250.0" promptText="Account Number" AnchorPane.leftAnchor="30.0" />
                               <TextField fx:id="tfBalance" layoutY="274.0" prefHeight="25.0" prefWidth="250.0" promptText="Account Balance" AnchorPane.leftAnchor="30.0" />
                               <DatePicker fx:id="dpBirthDate" layoutY="194.0" prefHeight="25.0" prefWidth="250.0" promptText="Holder Birthdate" AnchorPane.leftAnchor="30.0" />
@@ -77,6 +77,7 @@
                                     <Font name="System Bold Italic" size="12.0" />
                                  </font>
                               </Label>
+                              <ComboBox fx:id="cbGender" layoutX="30.0" layoutY="164.0" prefWidth="150.0" promptText="Choose Gender" />
                            </children>
                         </AnchorPane>
                      </content>

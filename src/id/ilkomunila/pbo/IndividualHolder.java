@@ -16,27 +16,27 @@ import javafx.beans.property.StringProperty;
  */
 public class IndividualHolder extends AccountHolder {
 
-    private StringProperty SSN;
+    private StringProperty gender;
     private StringProperty birthdate;
 
-    public IndividualHolder(int holderID, String name, String address, String SSN, String birthday, Account account) {
+    public IndividualHolder(int holderID, String name, String address, String gender, String birthday, Account account) {
         super(holderID, name, address, account);
-        this.SSN = new SimpleStringProperty(SSN);
+        this.gender = new SimpleStringProperty(gender);
         this.birthdate = new SimpleStringProperty(birthday);
     }
 
-    public IndividualHolder(int holderID, String name, String address, String SSN, String birthday, ArrayList<Account> accounts) {
+    public IndividualHolder(int holderID, String name, String address, String gender, String birthday, ArrayList<Account> accounts) {
         super(holderID, name, address, accounts);
-        this.SSN = new SimpleStringProperty(SSN);
+        this.gender = new SimpleStringProperty(gender);
         this.birthdate = new SimpleStringProperty(birthday);
     }
 
-    public String getSSN() {
-        return SSN.get();
+    public String getGender() {
+        return gender.get();
     }
 
-    public void setSSN(String SSN) {
-        this.SSN = new SimpleStringProperty(SSN);
+    public void setGender(String gender) {
+        this.gender = new SimpleStringProperty(gender);
     }
 
     public String getBirthdate() {
@@ -47,8 +47,8 @@ public class IndividualHolder extends AccountHolder {
         this.birthdate = new SimpleStringProperty(birthday);
     }
 
-    public StringProperty SSNProperty() {
-        return SSN;
+    public StringProperty genderProperty() {
+        return gender;
     }
 
     public StringProperty birthdateProperty() {

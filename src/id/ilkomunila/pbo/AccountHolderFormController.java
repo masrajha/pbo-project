@@ -21,6 +21,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -49,7 +50,7 @@ public class AccountHolderFormController implements Initializable {
     private TableColumn<IndividualHolder, String> addressColumn;
 
     @FXML
-    private TableColumn<IndividualHolder, String> ssnColumn;
+    private TableColumn<IndividualHolder, String> genderColumn;
 
     @FXML
     private TableColumn<IndividualHolder, String> bdColumn;
@@ -78,8 +79,8 @@ public class AccountHolderFormController implements Initializable {
     @FXML
     private TextField tfAddress;
 
-    @FXML
-    private TextField tfSSN;
+   @FXML
+    private ComboBox cbGender;
 
     @FXML
     private DatePicker dpBirthDate;
@@ -101,15 +102,18 @@ public class AccountHolderFormController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        System.out.println("Sukses");
+        ObservableList<String> gender=FXCollections.observableArrayList("Male","Female");
+        cbGender.setItems(gender);
+        
         try {
-            accHolder = new AccountHolderDataModel("MYSQL");
+            accHolder = new AccountHolderDataModel();
             lblDBStatus.setText(accHolder.conn != null ? "Connected" : "Not Connected");
             tfHolderID.setText("" + accHolder.nextAccountHolderID());
             tfHolderID.setDisable(true);
             tfAccNumber.setText(tfHolderID.getText() + "01");
             tfAccNumber.setDisable(true);
             dpBirthDate.setValue(LocalDate.of(LocalDate.now().getYear()-17, LocalDate.now().getMonthValue(), LocalDate.now().getDayOfMonth()));
+//            System.out.println("Sukses");
         } catch (SQLException ex) {
             System.out.println("Gagal");
             ex.printStackTrace();
@@ -128,7 +132,7 @@ public class AccountHolderFormController implements Initializable {
         String birthdate = String.format("%d-%02d-%02d", ld.getYear(), ld.getMonthValue(), ld.getDayOfMonth());
         //            System.out.println(birthdate);
         IndividualHolder ih = new IndividualHolder(Integer.parseInt(tfHolderID.getText()), tfName.getText(), tfAddress.getText(),
-                tfSSN.getText(), birthdate, new Account(Integer.parseInt(tfAccNumber.getText()), Double.parseDouble(tfBalance.getText())));
+                cbGender.getSelectionModel().getSelectedItem().toString(), birthdate, new Account(Integer.parseInt(tfAccNumber.getText()), Double.parseDouble(tfBalance.getText())));
 
         try {
             accHolder.addAccountHolder(ih);
@@ -147,7 +151,7 @@ public class AccountHolderFormController implements Initializable {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("holderID"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
-        ssnColumn.setCellValueFactory(new PropertyValueFactory<>("SSN"));
+        genderColumn.setCellValueFactory(new PropertyValueFactory<>("gender"));
         bdColumn.setCellValueFactory(new PropertyValueFactory<>("birthdate"));
         numAccColumn.setCellValueFactory(new PropertyValueFactory<>("numAccounts"));
         tblAccountHolder.setItems(null);
@@ -176,7 +180,7 @@ public class AccountHolderFormController implements Initializable {
         tfHolderID.setDisable(true);
         tfName.setText("");
         tfAddress.setText("");
-        tfSSN.setText("");
+        cbGender.getSelectionModel().clearSelection();
         dpBirthDate.setValue(LocalDate.of(LocalDate.now().getYear()-17, LocalDate.now().getMonthValue(), LocalDate.now().getDayOfMonth()));
         tfAccNumber.setText(tfHolderID.getText() + "01");
         tfAccNumber.setDisable(true);

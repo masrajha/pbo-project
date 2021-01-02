@@ -36,7 +36,7 @@ public class AccountHolderDataModel {
 
     public void addAccountHolder(IndividualHolder holder) throws SQLException {
         String insertHolder = "INSERT INTO account_holder (holder_id, name, address) VALUES (?,?,?)";
-        String insertIndivual = "INSERT INTO individual_holder (holder_id, SSN, birthdate) VALUES (?,?,?)";
+        String insertIndivual = "INSERT INTO individual_holder (holder_id, gender, birthdate) VALUES (?,?,?)";
         String insertAccount = "INSERT INTO account (holder_id, acc_number, balance) VALUES (?,?,?)";
 
         PreparedStatement stmtHolder = conn.prepareStatement(insertHolder);
@@ -47,7 +47,7 @@ public class AccountHolderDataModel {
 
         PreparedStatement stmtIndividual = conn.prepareStatement(insertIndivual);
         stmtIndividual.setInt(1, holder.getHolderID());
-        stmtIndividual.setString(2, holder.getSSN());
+        stmtIndividual.setString(2, holder.getGender());
         stmtIndividual.setString(3, holder.getBirthdate());
         stmtIndividual.execute();
 
@@ -85,7 +85,7 @@ public class AccountHolderDataModel {
 
     public ObservableList<IndividualHolder> getIndividualHolders() {
         ObservableList<IndividualHolder> data = FXCollections.observableArrayList();
-        String sql = "SELECT holder_id, name, address, SSN, birthdate "
+        String sql = "SELECT holder_id, name, address, gender, birthdate "
                 + "FROM account_holder NATURAL JOIN individual_holder "
                 + "ORDER BY name";
         try {

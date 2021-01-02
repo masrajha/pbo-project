@@ -41,7 +41,7 @@ CREATE TABLE `account_holder` (
 CREATE TABLE `individual_holder` (
   `id` int(10) NOT NULL,
   `name` varchar(100) DEFAULT NULL,
-  `SSN` varchar(20) DEFAULT NULL
+  `gender` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --

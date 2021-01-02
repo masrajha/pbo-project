@@ -84,7 +84,7 @@ public class DBHelper {
                         + ") ENGINE=InnoDB DEFAULT CHARSET=latin1;"
                         + "CREATE TABLE IF NOT EXISTS `individual_holder` ("
                         + "  `holder_id` int(10) NOT NULL,"
-                        + "  `SSN` varchar(20) DEFAULT NULL,"
+                        + "  `gender` varchar(20) DEFAULT NULL,"
                         + "  `birthdate` date NOT NULL,"
                         + "  PRIMARY KEY (`holder_id`),"
                         + "  FOREIGN KEY (`holder_id`) REFERENCES `account_holder` (`holder_id`) ON UPDATE CASCADE"
@@ -108,17 +108,17 @@ public class DBHelper {
                 break;
             }
             case "SQLITE": {
-                String sqlCreate = "CREATE TABLE IF NOT EXISTS  account ("
-                        + "    holder_id  INT (10)       REFERENCES account_holder (holder_id) ON DELETE RESTRICT"
-                        + "                                                                    ON UPDATE CASCADE,"
-                        + "    acc_number INT (10)       PRIMARY KEY,"
-                        + "    balance    DOUBLE (20, 2) "
-                        + ");"
-                        + "CREATE TABLE IF NOT EXISTS  account_holder ("
+                String sqlCreate = "CREATE TABLE IF NOT EXISTS  account_holder ("
                         + "    holder_id INT (10)      NOT NULL"
                         + "                            PRIMARY KEY,"
                         + "    name      VARCHAR (100) NOT NULL,"
                         + "    address   VARCHAR (255) NOT NULL"
+                        + ");"
+                        + "CREATE TABLE IF NOT EXISTS  account ("
+                        + "    holder_id  INT (10)       REFERENCES account_holder (holder_id) ON DELETE RESTRICT"
+                        + "                                                                    ON UPDATE CASCADE,"
+                        + "    acc_number INT (10)       PRIMARY KEY,"
+                        + "    balance    DOUBLE (20, 2) "
                         + ");"
                         + "CREATE TABLE IF NOT EXISTS  corporate_holder ("
                         + "    holder_id INT (10)      PRIMARY KEY"
@@ -131,7 +131,7 @@ public class DBHelper {
                         + "                           PRIMARY KEY"
                         + "                           REFERENCES account_holder (holder_id) ON DELETE RESTRICT"
                         + "                                                                 ON UPDATE CASCADE,"
-                        + "    SSN       VARCHAR (20) DEFAULT NULL,"
+                        + "    gender       VARCHAR (20) DEFAULT NULL,"
                         + "    birthdate DATE         NOT NULL"
                         + ");";
                 String sqls[] = sqlCreate.split(";");
