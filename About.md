@@ -67,9 +67,9 @@ classDiagram
     AccountHolder <|-- CorporateHolder
     AccountHolder "1"--o"*" Account : has
     AccountHolder --o AccountHolderDataModel : Data Modeling
-    AccountHolderDataModel .. AccountHolderController : Form Control
+    AccountHolderDataModel .. AccountHolderController : Data Control
     AccountHolderDataModel -- DBHelper : DB Connection
-    AccountHolderController -- AccountHolderForm
+    AccountHolderController -- AccountHolderForm : Form Control      
 
     class AccountHolder{
       <<abstract>>
