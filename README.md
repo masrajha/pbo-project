@@ -98,14 +98,17 @@ classDiagram
     class AccountHolderDataModel{
         Connection conn
         addAccountHolder()
+        addAccount()
         getIndividualHolders()
         getCorporateHolders()
         nextAccountHolderID()
+        nextAccountNumber()
     }
 
     class AccountHolderController{
         initialize()
         handleButtonAddAccount()
+        handleButtonAddAccountHolder()
         loadDataIndividualHolder()
         loadDataCorporateHolder()
         loadDataAccount()

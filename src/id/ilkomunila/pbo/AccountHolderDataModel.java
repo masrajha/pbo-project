@@ -171,7 +171,7 @@ public class AccountHolderDataModel {
         return 1000001;
     }
 
-    public int nextAccount(int holderID) {
+    public int nextAccountNumber(int holderID) {
         String sql = "SELECT MAX(acc_number) FROM account"
                 + " WHERE holder_id=" + holderID;
         ResultSet rs;

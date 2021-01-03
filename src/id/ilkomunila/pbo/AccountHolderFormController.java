@@ -182,7 +182,7 @@ public class AccountHolderFormController implements Initializable {
         tblAccount.setItems(null);
         tblAccount.setItems(data);
         btnAddAccount.setDisable(false);
-        tfNewAccNumber.setText(""+accHolder.nextAccount(holderID));
+        tfNewAccNumber.setText(""+accHolder.nextAccountNumber(holderID));
         tfNewHolderID.setText(""+holderID);
     }
 
