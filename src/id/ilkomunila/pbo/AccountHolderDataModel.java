@@ -134,13 +134,56 @@ public class AccountHolderDataModel {
         return data;
     }
 
+     public ObservableList<Account> getAccounts(int holderID) {
+        ObservableList<Account> data = FXCollections.observableArrayList();
+        String sql = "SELECT acc_number, balance"
+                + " FROM account"
+                + " WHERE holder_id="+holderID
+                + " ORDER BY acc_number";
+        try {
+            ResultSet rsAccount = conn.createStatement().executeQuery(sql);
+                while (rsAccount.next()) {
+                    data.add(new Account(rsAccount.getInt(1), rsAccount.getDouble(2)));
+                }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return data;
+    }
+    public void addAccount(int holderID, Account acc) throws SQLException {
+        String insertAccount = "INSERT INTO account (holder_id, acc_number, balance) VALUES (?,?,?)";
+
+        PreparedStatement stmt = conn.prepareStatement(insertAccount);
+        stmt.setInt(1, holderID);
+        stmt.setInt(2, acc.getAccNumber());
+        stmt.setDouble(3, acc.getBalance());
+        stmt.execute();
+    }
+
     public int nextAccountHolderID() throws SQLException {
         String sql = "SELECT MAX(holder_id) FROM account_holder";
         ResultSet rs = conn.createStatement().executeQuery(sql);
         while (rs.next()) {
 //            System.out.println("Haloooo "+rs.getInt(1));
-            return (rs.getInt(1)==0?1000001:rs.getInt(1)+1);
+            return (rs.getInt(1) == 0 ? 1000001 : rs.getInt(1) + 1);
         }
         return 1000001;
+    }
+
+    public int nextAccount(int holderID) {
+        String sql = "SELECT MAX(acc_number) FROM account"
+                + " WHERE holder_id=" + holderID;
+        ResultSet rs;
+        try {
+            rs = conn.createStatement().executeQuery(sql);
+            while (rs.next()) {
+            return rs.getInt(1) + 1;
+        }
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountHolderDataModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return 0;
     }
 }

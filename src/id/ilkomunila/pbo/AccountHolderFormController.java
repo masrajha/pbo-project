@@ -90,13 +90,23 @@ public class AccountHolderFormController implements Initializable {
 
     @FXML
     private TextField tfBalance;
+    
+    @FXML
+    private TextField tfNewHolderID;
+    @FXML
+    private TextField tfNewAccNumber;
 
+    @FXML
+    private TextField tfNewAccBalance;
+    
+    @FXML
+    private Button btnAddAccount;
     @FXML
     private Label lblDBStatus;
 
     @FXML
     private Label lbActionStatus;
-    
+
     @FXML
     private Button btnReload;
 
@@ -126,12 +136,12 @@ public class AccountHolderFormController implements Initializable {
             if (tblAccountHolder.getSelectionModel().getSelectedItem() != null) {
                 IndividualHolder ih = tblAccountHolder.getSelectionModel().getSelectedItem();
                 System.out.println(ih.getAccounts().size());
-                loadDataAccount(ih);        //Polymorphisme
+                loadDataAccount(ih.getHolderID());        //Polymorphisme
             }
         });
     }
 
-    public void handleButtonAddAccount(ActionEvent event) {
+    public void handleButtonAddAccountHolder(ActionEvent event) {
         LocalDate ld = dpBirthDate.getValue();
         String birthdate = String.format("%d-%02d-%02d", ld.getYear(), ld.getMonthValue(), ld.getDayOfMonth());
         //            System.out.println(birthdate);
@@ -161,19 +171,19 @@ public class AccountHolderFormController implements Initializable {
         numAccColumn.setCellValueFactory(new PropertyValueFactory<>("numAccounts"));
         tblAccountHolder.setItems(null);
         tblAccountHolder.setItems(data);
+        btnAddAccount.setDisable(true);
     }
 
-    public void loadDataAccount(AccountHolder accounts) {
-        ObservableList<Account> data = FXCollections.observableArrayList();
-        for (Account account : accounts.getAccounts()) {
-            data.add(account);
-        }
-
+    public void loadDataAccount(int holderID) {
+        ObservableList<Account> data = accHolder.getAccounts(holderID);
+        
         accNumColumn.setCellValueFactory(new PropertyValueFactory<>("accNumber"));
         balanceColumn.setCellValueFactory(new PropertyValueFactory<>("balance"));
         tblAccount.setItems(null);
         tblAccount.setItems(data);
-
+        btnAddAccount.setDisable(false);
+        tfNewAccNumber.setText(""+accHolder.nextAccount(holderID));
+        tfNewHolderID.setText(""+holderID);
     }
 
     public void handleClearForm(ActionEvent event) {
@@ -191,5 +201,16 @@ public class AccountHolderFormController implements Initializable {
         tfAccNumber.setDisable(true);
         tfBalance.setText("");
     }
-
+    @FXML
+    void handleAddAccount(ActionEvent event) {
+        try {
+            accHolder.addAccount(Integer.parseInt(tfNewHolderID.getText()),
+                    new Account(Integer.parseInt(tfNewAccNumber.getText()),Double.parseDouble(tfNewAccBalance.getText())));
+            
+            loadDataAccount(tblAccountHolder.getSelectionModel().getSelectedItem().getHolderID());
+            tfNewAccBalance.setText("");
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountHolderFormController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
