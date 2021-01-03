@@ -1,7 +1,19 @@
 # Account Holder System
 > Sistem dapat digunakan untuk transaksi perekaman data pemegang akun di bank, dimana terdapat 2 jenis akun yaitu individual dan corporate.
 > Setiap Pemegang Akun dapat memiliki 1 atau lebih  akun.
-> 
+
+Libraries and Tools of this project:
+- mysql-connector-java-5.1.xx.jar
+- sqlite-jdbc-3.xx.jar
+- scene builder
+- sqlite studio
+- mysql server (xampp recomended)
+- netbean editor
+- VS Code installed plugin
+  - Markdown All in one
+  - Markdown preview
+  - Live Server
+
 ## Desain
 To view the diagrams below install mermaid-diagram plugin at https://github.com/Redisrupt/mermaid-diagrams 
 ### Class Diagram
